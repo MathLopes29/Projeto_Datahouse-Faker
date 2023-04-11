@@ -1,0 +1,13 @@
+SELECT * FROM TB_FormaPag;
+SELECT * FROM TB_Estabelecimento;
+SELECT * FROM TB_Cliente;
+SELECT * FROM TB_Estoque;
+SELECT * FROM TB_Fornecedor;
+SELECT * FROM TB_Funcionario;
+SELECT * FROM TB_Produto;
+SELECT * FROM TB_Pedido;
+SELECT * FROM TB_ItensPedidos;
+SELECT * FROM TB_Caixa;
+SELECT * FROM TB_Setor;
+SELECT * FROM TB_Comissao;
+SELECT* FROM TB_NotaFiscal;
