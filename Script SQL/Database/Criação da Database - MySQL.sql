@@ -1,17 +1,19 @@
 /* DROP DATABASE Mercado; */
 
 SHOW DATABASES;
-CREATE DATABASE Mercado;
+CREATE DATABASE Mercado DEFAUlT CHARACTER SET utf8;
+/*CREATE DATABASE IF NOT EXISTS Mercado;*/
 USE Mercado;
-SHOW TABLES;
+
 
 CREATE TABLE TB_Estabelecimento(
 	Id INT,
     Nome VARCHAR (255) NOT NULL,
     Local_Ender VARCHAR (255) NOT NULL,
-    CEP CHAR (8) NOT NULL,
+    CEP CHAR (9) NOT NULL,
     
-    PRIMARY KEY (Id)
+	CONSTRAINT PK_EstabID
+    	PRIMARY KEY (Id)
 );
 
 CREATE TABLE TB_Cliente(
@@ -27,7 +29,8 @@ CREATE TABLE TB_Cliente(
 	Ativo INT NOT NULL CHECK (Ativo = 0 OR Ativo = 1 OR Ativo = 2 AND NOT Ativo >= 3),
 	/* Obs VARCHAR (20) NULL CHECK (Obs = 'Cancelado' OR Obs = 'Ativo' OR Obs = 'Pendente'), */
     
-	PRIMARY KEY (Id)
+	CONSTRAINT PK_ClienteID
+		PRIMARY KEY (Id)
 );
 
 CREATE TABLE TB_Estoque(
@@ -35,9 +38,10 @@ CREATE TABLE TB_Estoque(
     Estab_Id INT NOT NULL,
     Espaco INT,
     
-    PRIMARY KEY (Id),
+	CONSTRAINT PK_EstID
+    	PRIMARY KEY (Id),
     
-    CONSTRAINT FK_EstbID1 
+    CONSTRAINT FK_EstabID1
 		FOREIGN KEY (Estab_Id) 
 			REFERENCES TB_Estabelecimento (Id)
 );
@@ -53,9 +57,10 @@ CREATE TABLE TB_Fornecedor (
 	Ativo INT NOT NULL CHECK (Ativo = 0 OR Ativo = 1 OR Ativo = 2 AND NOT Ativo >= 3),
 	/* Obs VARCHAR (20) NULL CHECK (Obs = 'Cancelado' OR Obs = 'Ativo' OR Obs = 'Pendente') */
 
-	PRIMARY KEY (Id),
+	CONSTRAINT PK_FornID 
+		PRIMARY KEY (Id),
 
-	CONSTRAINT FK_EstID
+	CONSTRAINT FK_EstID1
 		FOREIGN KEY (Est_Id)
 			REFERENCES TB_Estoque(Id) 
 
@@ -69,13 +74,14 @@ CREATE TABLE TB_Produto(
 	Lote_Quantidade INT NOT NULL,
 	Data_DiaEntrada DATE,
     Data_HoraEntrada TIME,
-    Data_Saida DATETIME,
+    Data_Saida TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
 	Validade DATE NOT NULL,
 	Tipo VARCHAR (255) NOT NULL,
 	Nome VARCHAR (255) NOT NULL,
 	Valor_Unitario NUMERIC (10,2),
     
-    PRIMARY KEY (Id),
+	CONSTRAINT PK_ProdID
+    	PRIMARY KEY (Id),
 
     CONSTRAINT FK_EstID2
 		FOREIGN KEY (Est_Id) 
@@ -89,7 +95,7 @@ CREATE TABLE TB_Pedido(
     CONSTRAINT PK_PedID 
 		PRIMARY KEY (Id),
 	
-    CONSTRAINT FK_ClienteID
+    CONSTRAINT FK_ClienteID1
 		FOREIGN KEY (Cliente_Id)
 			REFERENCES TB_Cliente (Id)
 );
@@ -105,7 +111,7 @@ CREATE TABLE TB_ItensPedidos(
 		FOREIGN KEY (Ped_Id)
 			REFERENCES TB_Pedido (Id),
             
-	CONSTRAINT FK_ProdID 
+	CONSTRAINT FK_ProdID2
 		FOREIGN KEY (Prod_Id)
 			REFERENCES TB_Produto (Id)
 );
@@ -120,7 +126,8 @@ CREATE TABLE TB_FormaPag(
 	Obs VARCHAR (20) NULL CHECK (Obs = 'Pagamento Cancelado' OR Obs = 'Pagamento Concluido' OR Obs = 'Pagamento Pendente'),
 	*/
 
-    PRIMARY KEY (Id)
+	CONSTRAINT PK_FormaPagID
+		PRIMARY KEY (Id)
 );
 
 CREATE TABLE TB_NotaFiscal(
@@ -128,9 +135,10 @@ CREATE TABLE TB_NotaFiscal(
 	ItensPed_Id INT NOT NULL,
 	Cliente_Id INT NOT NULL, 
 	FormaPag_Id INT NOT NULL,
-	DataFiscal DATETIME,
+	DataFiscal TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
     
-    PRIMARY KEY (Id),
+	CONSTRAINT PK_NotaFiscalID
+    	PRIMARY KEY (Id),
     
     CONSTRAINT FK_ItensPedID
 			FOREIGN KEY (ItensPed_Id) 
@@ -164,13 +172,14 @@ CREATE TABLE TB_Caixa(
 	Id INT,
 	FormaPag_Id INT NOT NULL,
 	Data_Compra DATETIME,
-	Status INT CHECK (Status = 0 OR Status = 1 AND Status != 2),
+	StatusCaixa INT CHECK (StatusCaixa = 0 OR StatusCaixa = 1 AND StatusCaixa != 2),
 	
 	/*
 	Obs VARCHAR (20) CHECK (Obs = 'Pagamento Cancelado' OR Obs = 'Pagamento Feito'),
     */
 
-    PRIMARY KEY (Id),
+	CONSTRAINT PK_CaixaID
+    	PRIMARY KEY (Id),
     
     CONSTRAINT FK_FormaPagID2 
 		FOREIGN KEY (FormaPag_Id) 
@@ -179,22 +188,22 @@ CREATE TABLE TB_Caixa(
 
 CREATE TABLE TB_Setor(
 	Id INT,
-	Setor VARCHAR(255) NOT NULL,
-	Estab_Id INT NOT NULL,	
+	Setor VARCHAR(255) NOT NULL,	
 	Func_Id INT NOT NULL,
-	/* Operacao VARCHAR (255) NOT NULL UNIQUE, */
-	/* Nome VARCHAR(255) NOT NULL, */ 
+
+	/*
+	Nome VARCHAR(255) NOT NULL, 
+	Operacao VARCHAR (255) NOT NULL UNIQUE,
+	*/
+
 	Ativo INT NOT NULL CHECK (Ativo = 0 OR Ativo = 1 OR Ativo = 2 AND NOT Ativo >= 3),
 	
 	/*
 	Obs VARCHAR (20) NULL CHECK (Obs = 'Pagamento Cancelado' OR Obs = 'Pagamento Concluido' OR Obs = 'Pagamento Pendente'),
     */
 
-    PRIMARY KEY (Id),
-    
-    CONSTRAINT FK_EstabID3 
-		FOREIGN KEY (Estab_Id)
-			REFERENCES TB_Estabelecimento (Id),
+	CONSTRAINT PK_SetorID 
+    	PRIMARY KEY (Id),
             
     CONSTRAINT FK_FuncID       
 		FOREIGN KEY (Func_Id)
@@ -222,3 +231,4 @@ CREATE TABLE TB_Comissao(
 /*****************************/
 
 
+SHOW TABLES;
