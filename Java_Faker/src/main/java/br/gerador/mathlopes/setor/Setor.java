@@ -15,3 +15,4 @@ public class Setor {
     private int Ativo;
 
 }
+
