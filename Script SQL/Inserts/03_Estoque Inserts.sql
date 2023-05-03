@@ -1,5 +1,4 @@
 /* 15 Inserts dentro de Estoque - Temos um total de 15 Estoque de Loja e 5 Estabelecimentos e váriado número de Espaços*/
-
 INSERT INTO TB_Estoque VALUES (1, 5, 256);
 INSERT INTO TB_Estoque VALUES (2, 5, 128);
 INSERT INTO TB_Estoque VALUES (3, 5, 141);
