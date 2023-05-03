@@ -10,12 +10,12 @@ public class CriadorFornecedor {
 
     private static final Faker faker = new Faker(Locale.forLanguageTag("pt-br"));
     public static void main(String[] args) {
-        for(int i = 0; i < 15; i++) {
+        for(int i = 1; i < 16; i++) {
             var F = new Fornecedor();
-            F.setId(faker.random().nextInt(1, 16));
+            F.setId(i);
             F.setEst(faker.random().nextInt(1, 6));
-            F.setCNPJ(faker.number().digits(14));
-            F.setCPF(faker.number().digits(11));
+            F.setCNPJ(faker.numerify("1#############"));
+            F.setCPF(faker.numerify("1##########"));
             F.setNome(faker.name().fullName());
             F.setEnder(faker.address().fullAddress());
             F.setAtivo(faker.number().numberBetween(0, 3));
