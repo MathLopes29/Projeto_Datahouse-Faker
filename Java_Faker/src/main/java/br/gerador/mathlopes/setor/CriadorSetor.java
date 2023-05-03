@@ -11,16 +11,16 @@ public class CriadorSetor {
     private static final Faker faker = new Faker(Locale.forLanguageTag("pt-br"));
     public static void main(String[] args) {
 
-        for(int i = 1; i < 6; i++) {
+        for(int i = 1; i < 401; i++) {
             Setor s = new Setor();
 
             s.setId(i);
             s.setEstabId(faker.random().nextInt(1, 6));
-            s.setFuncId(faker.random().nextInt(1, 120));
-            /* s.setOperacao(); */
+            s.setFuncId(i);
+            s.setOperacao(faker.company().profession());
             s.setAtivo(faker.random().nextInt(0, 2));
 
-            String mysql = "INSERT INTO TB_Setor VALUES( " + s.getId() + ", " + null +", " + s.getEstabId() + ", " + s.getFuncId() + ", " + s.getAtivo() + " );";
+            String mysql = "INSERT INTO TB_Setor VALUES( " + s.getId() + ", '" + null +"', " + s.getFuncId() + ", " + s.getAtivo() + " );";
             log.info(mysql);
         }
     }
