@@ -1,5 +1,4 @@
 /* Inserts de 80 Comissões de 400 Funcionários, onde no total quantifica 1/5 dos Funcionários (20% de Receita vai para os Funcionários) */
-
 INSERT INTO TB_Comissao VALUES(1, 1, 1, 0.73 );
 INSERT INTO TB_Comissao VALUES(2, 4, 2, 0.9 );
 INSERT INTO TB_Comissao VALUES(3, 1, 3, 0.52 );
