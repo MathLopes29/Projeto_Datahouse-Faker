@@ -1,5 +1,4 @@
 /* 300 Pedidos para 500 Clientes */
-
 INSERT INTO TB_Pedido VALUES (1, 296 );
 INSERT INTO TB_Pedido VALUES (2, 13 );
 INSERT INTO TB_Pedido VALUES (3, 127 );
