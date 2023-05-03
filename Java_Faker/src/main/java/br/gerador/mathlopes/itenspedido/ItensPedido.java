@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItensPedido {
 
+    private int Id;
     private int Ped_Id;
     private int Prod_Id;
 	private String Nome;
